@@ -31,14 +31,8 @@ Feature: search for movies by director
     When I follow "Find Movies With Same Director"                         # features/step_definitions/web_steps.rb:56
     Then I should be on the home page                                      # features/step_definitions/web_steps.rb:230
     And I should see "'Alien' has no director info"                        # features/step_definitions/web_steps.rb:105
-      expected to find text "'Alien' has no director info" in "Rotten Potatoes! All Movies Include: PG R Movie Title Rating Release Date Director More Info Star Wars PG 1977-05-25 00:00:00 UTC George Lucas More about Star Wars Blade Runner PG 1982-06-25 00:00:00 UTC Ridley Scott More about Blade Runner Alien R 1979-05-25 00:00:00 UTC More about Alien THX-1138 R 1971-03-11 00:00:00 UTC George Lucas More about THX-1138 Add new movie" (RSpec::Expectations::ExpectationNotMetError)
-      ./features/step_definitions/web_steps.rb:107:in `/^(?:|I )should see "([^"]*)"$/'
-      features/movies_by_director.feature:34:in `And I should see "'Alien' has no director info"'
 
-Failing Scenarios:
-cucumber features/movies_by_director.feature:29 # Scenario: can't find similar movies if we don't know director (sad path)
-
-3 scenarios (1 failed, 2 passed)
-17 steps (1 failed, 16 passed)
-0m0.341s
-Coverage report generated for Cucumber Features, RSpec to /Users/songzhenlei/Desktop/21spring/csce606/HW4/csce606_HW4/rottenpotatoes/coverage. 76 / 101 LOC (75.25%) covered.
+3 scenarios (3 passed)
+17 steps (17 passed)
+0m0.302s
+Coverage report generated for Cucumber Features to /Users/songzhenlei/Desktop/21spring/csce606/HW4/csce606_HW4/rottenpotatoes/coverage. 75 / 100 LOC (75.0%) covered.
