@@ -1,6 +1,6 @@
 class Movie < ActiveRecord::Base
     
-attr_accessible :title, :rating, :description, :release_date, :director
+#attr_accessible :title, :rating, :description, :release_date, :director
 
     def self.all_ratings
         return self.select("DISTINCT rating").map(&:rating)
