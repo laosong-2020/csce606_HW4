@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-
+  helper_method :sortingDirection, :sortingColumn
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -7,7 +7,53 @@ class MoviesController < ApplicationController
   end
 
   def index
+    if session[:column] == nil or (params[:column] != nil and session[:column] != sortingColumn)
+      session[:column] = sortingColumn
+    end
+    if session[:dir] = nil or (params[:dir] != nil and session[:dir] != sortingDirection)
+      session[:dir] = sortingDirection
+    end
+
+    if session[:ratings].blank? or params[:commit] != nil
+      session[:ratings] = boxChecked
+    end
+
     @movies = Movie.all
+    @all_ratings = Movie.all_ratings
+    @ratings_to_show = @all_ratings
+    @checked_boxes = session[:ratings]
+
+    if session[:dir] != ""
+      if @checked_boxes.empty?
+        @movies = Movie.order("#{session[:column]} #{session[:dir]}".all)
+      else
+        @movies = Movie.order("#{session[:column]} #{session[:dir]}").select{|i| @checked_boxes.include?(i.rating)? true: false}
+      end
+      if session[:column] == "title"
+        @MovieTitleClass = "hilite"
+        @ReleaseDateClass = ""
+      elsif session[:column] == "release_date"
+        @MovieTitleClass = ""
+        @ReleaseDateClass = "hilite"
+      else
+        @MovieTitleClass = ""
+        @ReleaseDateClass = ""
+      end
+    else
+      if @checked_boxes.empty?
+        @movies = Movie.all
+      else
+        @movies = Movie.all.select{|i| @checked_boxes.include?(i.rating)? true: false}
+      end
+      @MovieTitleClass = ""
+      @ReleaseDateClass = ""
+      @rating_array = []
+      @movies.each do |m_table|
+        @rating_array << m_table[:rating]
+      end
+      @movies = @movies.uniq
+      @ratings_to_show = @rating_array.uniq
+    end
   end
 
   def new
@@ -43,5 +89,32 @@ class MoviesController < ApplicationController
   # This helps make clear which methods respond to requests, and which ones do not.
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
+  end
+
+  def sortingDirection
+    if params[:dir] == "asc"
+      return "asc"
+    elsif params[:dir] == "desc"
+      return "desc"
+    else
+      return ""
+    end
+  end
+
+  def sortingColumn
+    if params[:column] == "Movie Title"
+      return "title"
+    elsif params[:column] = "Release Date"
+      return "release_date"
+    else
+      return "title"
+    end
+  end
+
+  private def boxChecked
+    if params[:ratings] == nil
+      return []
+    end
+    return params[:ratings]
   end
 end
