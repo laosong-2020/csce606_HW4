@@ -1,4 +1,4 @@
-<h2>Similar movies for #{@movie.title}</h2>
+<h2>Similar movies for <em><%= @movie.title %></em></h2>
 <ul>
   <% @similar_movies.each do |movie_name| %>
     <li>
