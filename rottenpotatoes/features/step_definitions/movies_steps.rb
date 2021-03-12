@@ -23,8 +23,3 @@ Then /I should see all the movies/ do
     step %{I should see "#{movie.title}"}
   end
 end
-
-Then /the director of "(.*)" should be "(.*)"/ do |title, director|
-	page.should have_content(title)
-	page.should have_content(director)
-end

@@ -5,17 +5,6 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-  
-  def director_sames
-    id = params[:id] # retrieve movie ID from URI route
-    @movie = Movie.find(id) # look up movie by unique ID
-    if @movie.director ==nil || @movie.director.empty?
-      flash[:warning] = "'#{@movie.title}' has no director info"
-      redirect_to '/movies'
-    end
-    @similar_list = @movie.find_all_by_director
-    
-  end
 
   def index
     #sortingColumn: "title " or "release_date"
