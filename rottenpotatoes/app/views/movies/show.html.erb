@@ -13,7 +13,7 @@
   <li>
     Director:
     <%= @movie.director%>
-    <%= link_to 'Find Movies With Same Director', director_sames_path%>
+    <%= link_to 'Find Movies With Same Director', director_sames_path(@movie), :class => 'btn btn-primary col-2'%>
   </li>
 </ul>
 
