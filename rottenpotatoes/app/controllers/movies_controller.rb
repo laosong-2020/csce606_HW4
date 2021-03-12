@@ -7,10 +7,12 @@ class MoviesController < ApplicationController
   end
 
   def index
+    #sortingColumn: "title " or "release_date"
+    #sortingDirection: "asc" or "desc"
     if session[:column] == nil or (params[:column] != nil and session[:column] != sortingColumn)
       session[:column] = sortingColumn
     end
-    if session[:dir] = nil or (params[:dir] != nil and session[:dir] != sortingDirection)
+    if session[:dir] == nil or (params[:dir] != nil and session[:dir] != sortingDirection)
       session[:dir] = sortingDirection
     end
 
@@ -25,7 +27,7 @@ class MoviesController < ApplicationController
 
     if session[:dir] != ""
       if @checked_boxes.empty?
-        @movies = Movie.order("#{session[:column]} #{session[:dir]}".all)
+        @movies = Movie.order("#{session[:column]} #{session[:dir]}").all
       else
         @movies = Movie.order("#{session[:column]} #{session[:dir]}").select{|i| @checked_boxes.include?(i.rating)? true: false}
       end
@@ -47,13 +49,13 @@ class MoviesController < ApplicationController
       end
       @MovieTitleClass = ""
       @ReleaseDateClass = ""
+    end
       @rating_array = []
       @movies.each do |m_table|
         @rating_array << m_table[:rating]
       end
       @movies = @movies.uniq
       @ratings_to_show = @rating_array.uniq
-    end
   end
 
   def new
@@ -104,7 +106,7 @@ class MoviesController < ApplicationController
   def sortingColumn
     if params[:column] == "Movie Title"
       return "title"
-    elsif params[:column] = "Release Date"
+    elsif params[:column] == "Release Date"
       return "release_date"
     else
       return "title"
@@ -112,6 +114,7 @@ class MoviesController < ApplicationController
   end
 
   private def boxChecked
+    #read from params  to fill in cookies
     if params[:ratings] == nil
       return []
     end
