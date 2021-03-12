@@ -92,7 +92,7 @@ class MoviesController < ApplicationController
     if @similar_movies.nil?
       #redirect_to movies_path, alert: "'#{params[:title]}' has no director info"
       redirect_to movies_path
-      flash[:motice] = "'#{@movie.title}' has no director info"
+      #flash[:motice] = "'#{@movie.title}' has no director info"
     end
     
   end
