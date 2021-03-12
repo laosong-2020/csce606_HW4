@@ -5,7 +5,7 @@ describe Movie do
         movie1 = Movie.create(title: 'Test1', director: 'Director1')
         movie2 = Movie.create(title: 'Test2', director: 'Director1')
         results = Movie.similar_movies(movie1.title)
-        expect(results).to eql([movie1.title, movie1.title, movie2.title])
+        expect(results).to eql([movie1.title, movie2.title])
         #expect(results).to eql(["Test1", "Test1", "Test2"])
     end
     
