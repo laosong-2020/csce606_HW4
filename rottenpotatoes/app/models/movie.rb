@@ -6,7 +6,9 @@ class Movie < ActiveRecord::Base
         return self.select("DISTINCT rating").map(&:rating)
     end
 
-    def find_all_by_director
-        Movie.find_all_by_director(director)
+    def self.similar_movies movie_title
+        director = Movie.find_by(title: movie_title).director
+        return nil if director.blank? or director.nil?
+        Movie.where(director: director).pluck(:title)
     end
 end
