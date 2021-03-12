@@ -5,7 +5,7 @@ module MoviesHelper
   end
   def sort_method(column)
     columnLowerCase = (column == "Movie Title")? "title": "release_date"
-    dir2 = (columnLowerCase == sortingColumn && sortingDirection == "asc")? "desc": "asc"
+    dir = (columnLowerCase == sortingColumn && sortingDirection == "asc")? "desc": "asc"
 
     header = ""
     if columnLowerCase == "title"
